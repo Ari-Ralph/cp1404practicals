@@ -9,6 +9,7 @@ Q - Quit"""
 
 
 def main():
+    """Use menu structure to  determine temperature conversion units"""
     print(MENU)
     choice = input(">>> ").upper()
     while choice != "Q":
