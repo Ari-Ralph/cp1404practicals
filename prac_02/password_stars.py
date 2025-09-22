@@ -8,11 +8,23 @@ MINIMUM_LENGTH = 5
 
 
 def main():
+    """Get password and print number of asterisks equal to password length"""
+    password = get_valid_password()
+    print_line(password)
+
+
+def get_valid_password() -> str:
+    """Get password with a length >= to a minimum length"""
     password = input(f"Enter password with at least {MINIMUM_LENGTH} characters: ")
     while len(password) < MINIMUM_LENGTH:
         print("INVALID PASSWORD!")
         password = input(f"Enter password with at least {MINIMUM_LENGTH} characters: ")
-    for i in range(len(password)):
+    return password
+
+
+def print_line(sequence: str):
+    """Print number of asterisks equal to length of sequence"""
+    for i in range(len(sequence)):
         print("*", end="")
 
 
