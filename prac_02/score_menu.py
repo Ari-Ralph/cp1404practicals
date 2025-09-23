@@ -15,8 +15,8 @@ def main():
         if choice == "G":
             score = get_valid_score()
         elif choice == "P":
-            # TODO print result
-            pass
+            result = determine_result(score)
+            print(f"The result for a score of {score} is {result}.")
         elif choice == "S":
             # TODO print number of stars
             pass
@@ -34,6 +34,15 @@ def get_valid_score():
         print("Invalid score")
         score = float(input("Score: "))
     return score
+
+def determine_result(score: float) -> str:
+    """Determine the result from a given score"""
+    if score >= 90:
+        return "excellent"
+    elif score >= 50:
+        return "passable"
+    else:
+        return "bad"
 
 
 main()
