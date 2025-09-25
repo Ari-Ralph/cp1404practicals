@@ -7,7 +7,7 @@ MENU = "(G)et a valid score\n(P)rint result\n(S)how stars\n(Q)uit"
 
 
 def main():
-    """Get valid score, then print menu and get user input"""
+    """TO DO!!!!!!!!!!!"""
     score = get_valid_score()
     print(MENU)
     choice = input("> ").upper()
@@ -18,8 +18,7 @@ def main():
             result = determine_result(score)
             print(f"The result for a score of {score} is {result}.")
         elif choice == "S":
-            # TODO print number of stars
-            pass
+            print_asterisks(score)
         else:
             print("Invalid choice")
         print()
@@ -29,11 +28,13 @@ def main():
 
 
 def get_valid_score():
+    """Get a score between 0 and 100"""
     score = float(input("Score: "))
     while 0 > score or score > 100:
         print("Invalid score")
         score = float(input("Score: "))
     return score
+
 
 def determine_result(score: float) -> str:
     """Determine the result from a given score"""
@@ -43,6 +44,11 @@ def determine_result(score: float) -> str:
         return "passable"
     else:
         return "bad"
+
+
+def print_asterisks(length):
+    """Print line of asterisks equal to length"""
+    print("*" * int(length))
 
 
 main()
