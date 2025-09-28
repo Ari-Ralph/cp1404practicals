@@ -22,7 +22,7 @@ def get_valid_password() -> str:
     return password
 
 
-def print_number_of_asterisks(sequence: str):
+def print_number_of_asterisks(sequence: str) -> None:
     """Print number of asterisks equal to length of sequence"""
     for i in range(len(sequence)):
         print("*", end="")

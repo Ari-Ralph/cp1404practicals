@@ -1,5 +1,6 @@
 """
 CP1404 - Practical 02
+Ari Ralph
 Menu-based score status program
 """
 
@@ -7,7 +8,7 @@ MENU = "(G)et a valid score\n(P)rint result\n(S)how stars\n(Q)uit"
 
 
 def main():
-    """TO DO!!!!!!!!!!!"""
+    """Score program with menu function"""
     score = get_valid_score()
     print(MENU)
     choice = input("> ").upper()
@@ -46,8 +47,8 @@ def determine_result(score: float) -> str:
         return "bad"
 
 
-def print_asterisks(length):
-    """Print line of asterisks equal to length"""
+def print_asterisks(length: float) -> None:
+    """Print line of asterisks equal to length, rounded down"""
     print("*" * int(length))
 
 
