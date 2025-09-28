@@ -9,7 +9,7 @@ Q - Quit"""
 
 
 def main():
-    """Use menu structure to  determine temperature conversion units"""
+    """Menu-based program for converting Fahrenheit to Celsius and vice versa"""
     print(MENU)
     choice = input(">>> ").upper()
     while choice != "Q":
