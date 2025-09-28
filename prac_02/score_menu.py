@@ -1,14 +1,14 @@
 """
 CP1404 - Practical 02
 Ari Ralph
-Menu-based score status program
+Menu-based score status program.
 """
 
 MENU = "(G)et a valid score\n(P)rint result\n(S)how stars\n(Q)uit"
 
 
 def main():
-    """Score program with menu function"""
+    """Score program with menu function."""
     score = get_valid_score()
     print(MENU)
     choice = input("> ").upper()
@@ -29,7 +29,7 @@ def main():
 
 
 def get_valid_score():
-    """Get a score between 0 and 100"""
+    """Get a score between 0 and 100."""
     score = float(input("Score: "))
     while 0 > score or score > 100:
         print("Invalid score")
@@ -38,7 +38,7 @@ def get_valid_score():
 
 
 def determine_result(score: float) -> str:
-    """Determine the result from a given score"""
+    """Determine the result from a given score."""
     if score >= 90:
         return "excellent"
     elif score >= 50:
@@ -48,7 +48,7 @@ def determine_result(score: float) -> str:
 
 
 def print_asterisks(length: float) -> None:
-    """Print line of asterisks equal to length, rounded down"""
+    """Print line of asterisks equal to length, rounded down."""
     print("*" * int(length))
 
 

@@ -9,7 +9,7 @@ Q - Quit"""
 
 
 def main():
-    """Menu-based program for converting Fahrenheit to Celsius and vice versa"""
+    """Menu-based program for converting Fahrenheit to Celsius and vice versa."""
     print(MENU)
     choice = input(">>> ").upper()
     while choice != "Q":
@@ -29,12 +29,12 @@ def main():
 
 
 def convert_celsius_to_fahrenheit(celsius: float) -> float:
-    """Convert Celsius to Fahrenheit"""
+    """Convert Celsius to Fahrenheit."""
     return celsius * 9.0 / 5 + 32
 
 
 def convert_fahrenheit_to_celsius(fahrenheit: float) -> float:
-    """Convert Fahrenheit to Celsius"""
+    """Convert Fahrenheit to Celsius."""
     return 5 / 9 * (fahrenheit - 32)
 
 
