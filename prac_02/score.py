@@ -12,8 +12,8 @@ def main():
     inputted_score_result = get_result(inputted_score)
     print(f"The result for a score of {inputted_score} is {inputted_score_result}.")
     random_score = random.uniform(0, 100)
-    random_result = get_result(random_score)
-    print(f"The result for a random score of {random_score:.2f} is {random_result}.")
+    random_score_result = get_result(random_score)
+    print(f"The result for a random score of {random_score:.2f} is {random_score_result}.")
 
 
 def get_result(score: float) -> str:
