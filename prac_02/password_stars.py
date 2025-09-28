@@ -10,7 +10,7 @@ MINIMUM_LENGTH = 5
 def main():
     """Get password and print number of asterisks equal to password length"""
     password = get_valid_password()
-    print_line(password)
+    print_number_of_asterisks(password)
 
 
 def get_valid_password() -> str:
@@ -22,7 +22,7 @@ def get_valid_password() -> str:
     return password
 
 
-def print_line(sequence: str):
+def print_number_of_asterisks(sequence: str):
     """Print number of asterisks equal to length of sequence"""
     for i in range(len(sequence)):
         print("*", end="")
