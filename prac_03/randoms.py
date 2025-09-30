@@ -9,3 +9,6 @@ print(random.randrange(3, 10, 2))
 
 # Produce a float between 2.5 and 5.5, inclusive
 print(random.uniform(2.5, 5.5))
+
+# Produce a number (integer) between 1 and 100, inclusive
+print(random.randint(1, 100))
