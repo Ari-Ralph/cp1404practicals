@@ -44,6 +44,16 @@ def is_valid_password(password):
         elif character in SPECIAL_CHARACTERS:
             number_of_special += 1
 
+    if number_of_lower == 0:
+        return False
+    if number_of_upper == 0:
+        return False
+    if number_of_digit == 0:
+        return False
+
+    if IS_SPECIAL_CHARACTER_REQUIRED and number_of_special == 0:
+        return False
+
     return True
 
 
