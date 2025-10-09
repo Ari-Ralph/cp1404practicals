@@ -32,6 +32,7 @@ numbers = [1, 19, 123, 456, -25]
 for i, number in enumerate(numbers, 1):
     print(f"Number {i} is {number:5}")
 
+
 # Use f-string formatting to produce the output:
 # 1922 Gibson L-5 CES for about $16,036!
 print(f"{year} {name} for about ${cost:,.0f}!")
@@ -48,6 +49,6 @@ print(f"{year} {name} for about ${cost:,.0f}!")
 # 2 ^ 7 is  128
 # 2 ^ 8 is  256
 # 2 ^ 9 is  512
-# 2 ^10 is 1024
+# 2 ^10 is 10240
 for i in range(0, 11):
     print(f"2 ^{i:2} is {2 ** i:4}")

@@ -34,6 +34,7 @@ def is_valid_password(password):
     number_of_upper = 0
     number_of_digit = 0
     number_of_special = 0
+
     for character in password:
         if character.islower():
             number_of_lower += 1
