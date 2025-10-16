@@ -1,7 +1,7 @@
 """
 CP1404 - Practical 05
-State names in a dictionary
-File needs reformatting
+State names in a dictionary.
+File has been reformatted.
 """
 
 CODE_TO_NAME = {"QLD": "Queensland", "NSW": "New South Wales", "NT": "Northern Territory", "WA": "Western Australia",
