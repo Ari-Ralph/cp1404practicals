@@ -7,15 +7,18 @@ Actual:
 
 
 class ProgrammingLanguage:
-    def __init__(self, name="", typing="", reflection=False, year=""):
+    def __init__(self, name, typing, reflection, year):
         """Initialise a programming language instance."""
         self.name = name
         self.typing = typing
         self.reflection = reflection
         self.year = year
 
+    def __str__(self):
+        """Return string format of programming language object."""
+        return f"{self.name}, {self.typing} Typing, Reflection={self.reflection}, First appeared in {self.year}"
+
     def is_dynamic(self):
-        """Is the language's typing dynamic."""
-        if self.typing == "Dynamic":
-            return True
-        return False
+        """Determine if the language is dynamically typed."""
+        return self.typing == "Dynamic"
+
