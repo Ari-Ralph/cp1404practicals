@@ -4,3 +4,5 @@ Guitar class testing file
 Estimate: 40 minutes
 Actual:
 """
+
+from prac_06.guitar import Guitar
