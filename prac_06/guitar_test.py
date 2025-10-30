@@ -2,7 +2,7 @@
 CP1404 - Practical 06
 Guitar class testing file.
 Estimate: 40 minutes
-Actual:
+Actual: 56 minutes
 """
 
 from prac_06.guitar import Guitar

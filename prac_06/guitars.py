@@ -2,12 +2,12 @@
 CP1404 - Practical 06
 Guitar class client file.
 Estimate: 40 minutes
-Actual:
+Actual: 56 minutes
 """
 
 from prac_06.guitar import Guitar
 
-guitars = []
+guitars = [Guitar("Gibson L-5 CES", 1922, 16035.40), Guitar("Line 6 JTV-59", 2010, 1512.9)]
 
 print("My guitars!")
 name = input("Name: ")
@@ -23,8 +23,9 @@ print()
 print("...snip...")
 print()
 print("These are my guitars:")
-name_spacing = max(len(guitar.name) for guitar in guitars)
-cost_spacing = max(len(str(f"{guitar.cost:,.2f}")) for guitar in guitars)
+max_name_width = max(len(guitar.name) for guitar in guitars)
+max_cost_width = max(len(str(f"{guitar.cost:,.2f}")) for guitar in guitars)
 for i, guitar in enumerate(guitars, 1):
     vintage_string = "(vintage)" if guitar.is_vintage() else ""
-    print(f"Guitar {i}: {guitar.name:>{name_spacing}} ({guitar.year}), worth ${guitar.cost:{cost_spacing},.2f} {vintage_string}")
+    print(
+        f"Guitar {i}: {guitar.name:>{max_name_width}} ({guitar.year}), worth ${guitar.cost:{max_cost_width},.2f} {vintage_string}")
