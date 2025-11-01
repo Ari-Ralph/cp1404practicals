@@ -7,6 +7,7 @@ Actual: 26 minutes
 
 
 class ProgrammingLanguage:
+    """Class to store data about a programming language."""
     def __init__(self, name, typing, reflection, year):
         """Initialise a programming language instance."""
         self.name = name
