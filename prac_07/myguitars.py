@@ -12,11 +12,14 @@ INDEX_COST = 2
 
 
 def main():
-    guitars = process_guitars_file()
+
+    guitars = load_guitars_file()
+    guitars = get_new_guitar(guitars)
     for guitar in sorted(guitars):
         print(guitar)
 
-def process_guitars_file():
+
+def load_guitars_file():
     guitars = []
     with open(FILENAME, 'r') as in_file:
         reader = csv.reader(in_file)
@@ -26,6 +29,19 @@ def process_guitars_file():
             row[INDEX_COST] = float(row[INDEX_COST])
             guitars.append(Guitar(*row))
     return guitars
+
+def get_new_guitar(guitars):
+    name = input("Name: ")
+    while name != "":
+        year = int(input("Year: "))
+        cost = float(input("Cost: $"))
+        new_guitar = Guitar(name, year, cost)
+        guitars.append(new_guitar)
+        print(f"{new_guitar} added")
+        print()
+        name = input("Name: ")
+    return guitars
+
 
 
 main()
