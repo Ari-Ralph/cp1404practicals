@@ -12,25 +12,29 @@ INDEX_COST = 2
 
 
 def main():
-
+    """Get, display and save guitar data from csv file and user."""
     guitars = load_guitars_file()
     guitars = get_new_guitar(guitars)
     for guitar in sorted(guitars):
         print(guitar)
+    save_guitars(guitars)
 
 
 def load_guitars_file():
+    """Form guitars list from input of csv file."""
     guitars = []
     with open(FILENAME, 'r') as in_file:
         reader = csv.reader(in_file)
         next(reader)  # Skip headers
         for row in reader:
-            row[INDEX_YEAR] = int(row[INDEX_YEAR])
-            row[INDEX_COST] = float(row[INDEX_COST])
+            row[INDEX_YEAR] = int(row[INDEX_YEAR]) # Ignore PyCharm warning
+            row[INDEX_COST] = float(row[INDEX_COST]) # Ignore PyCharm warning
             guitars.append(Guitar(*row))
     return guitars
 
+
 def get_new_guitar(guitars):
+    """Get guitar data from the user."""
     name = input("Name: ")
     while name != "":
         year = int(input("Year: "))
@@ -42,6 +46,13 @@ def get_new_guitar(guitars):
         name = input("Name: ")
     return guitars
 
+
+def save_guitars(guitars):
+    """Save guitars to csv file."""
+    with open(FILENAME, 'w') as out_file:
+        for guitar in guitars:
+            guitar.year, guitar.cost = str(guitar.year), str(guitar.cost)  # Convert int to str
+            print(",".join([guitar.name, guitar.year, guitar.cost]), file=out_file)
 
 
 main()
