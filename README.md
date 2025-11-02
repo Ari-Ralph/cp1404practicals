@@ -7,7 +7,7 @@ This is a repository containing the practical files for the JCU subject CP1404 -
 ## About Programmer
 
 These programs were written by Ari Ralph, in their second year of a
-Bachelor of Biomedical Sciences - Major in Bioinformatics (Hence the programming subject:) )
+Bachelor of Biomedical Sciences. They are studying a Major in Bioinformatics, hence the programming subject. :)
 
 ## Main Lessons About Clean Code
 
