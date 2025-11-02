@@ -16,4 +16,5 @@ Bachelor of Biomedical Sciences - Major in Bioinformatics (Hence the programming
 - DO NOT REPEAT YOURSELF (DRY)
 
 [Programming Patterns Page](https://github.com/CP1404/Starter/wiki/Programming-Patterns)
+
 [CP1404 Practical Repo](https://github.com/CP1404/Practicals)
