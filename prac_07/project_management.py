@@ -8,14 +8,14 @@ Actual:
 from prac_07.project import Project
 
 DEFAULT_FILENAME = "projects.txt"
-MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by da\n- (A)dd new project\n- (U)pdate proje\n- (Q)uit"
+MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date\n- (A)dd new project\n- (U)pdate project\n- (Q)uit"
 INDEX_COST_ESTIMATE = 3
 INDEX_COMPLETION_PERCENTAGE = 4
 
 
 def main():
     """Menu-based project management program."""
-    projects = load_projects(DEFAULT_FILENAME)
+    projects, header = load_projects()
     print("Welcome to Pythonic Project Management")
     print(f"Loaded {len(projects)} projects from {DEFAULT_FILENAME}")
     print(MENU)
@@ -29,7 +29,11 @@ def main():
             except FileNotFoundError:
                 print("Invalid filename - Please check your spelling")
         elif menu_choice == "S":
-            pass
+            out_filename = input("Save Filename: ")
+            try:
+                save_projects(projects, header)
+            except FileNotFoundError:
+                print("Invalid filename - Please check your spelling")
         elif menu_choice == "D":
             display_projects(projects)
         elif menu_choice == "F":
@@ -42,17 +46,21 @@ def main():
             print()
         print(MENU)
         menu_choice = input(">>> ").upper()
+    save_choice = input(f"Would you like to save to {DEFAULT_FILENAME}? ").upper()
+    if save_choice == "Y":
+        save_projects(projects, header)
+    print("Thank you for using custom-built project management software.")
 
 
-def load_projects(filename):
+def load_projects(in_filename=DEFAULT_FILENAME):
     """Read a txt file to create a list of Project objects."""
     projects = []
-    with open(filename, 'r') as in_file:
-        in_file.readline()  # Skip headers
+    with open(in_filename, 'r') as in_file:
+        header = in_file.readline().strip()  # Skip headers
         for line in in_file:
             project_data = line.strip().split("\t")
             projects.append(Project(*project_data))
-    return projects
+    return projects, header
 
 
 def display_projects(projects):
@@ -78,11 +86,15 @@ def update_project(projects):
     project_choice = get_valid_number("Project choice:", 0, len(projects) - 1)
     selected_project = projects[project_choice]
     print(selected_project)
-    selected_project.completion_percentage = get_valid_number("New Percentage: ", 1, 100)
-    selected_project.priority = get_valid_number("New priority: ", 1, 100)
+    new_percentage = get_valid_number("New Percentage: ", 1, 100, True)
+    # If input was empty, percentage remains the same value
+    selected_project.completion_percentage = new_percentage if new_percentage is not None else selected_project.completion_percentage
+    new_priority = get_valid_number("New priority: ", 1, 100, True)
+    # If input was empty, priority remains the same value
+    selected_project.priority = new_priority if new_priority is not None else selected_project.priority
 
 
-def get_valid_number(prompt: str, minimum: int, maximum: int) -> int:
+def get_valid_number(prompt: str, minimum: int, maximum: int,  is_empty_allowed = False):
     """Get a valid number."""
     is_number_valid = False
     while not is_number_valid:
@@ -92,12 +104,22 @@ def get_valid_number(prompt: str, minimum: int, maximum: int) -> int:
                 print(f"Number must be >= {minimum}")
             elif maximum is not None and number > maximum:
                 print(f"Number must be less than {maximum}")
-
             else:
                 is_number_valid = True
         except ValueError:
-            print("Invalid input - please enter valid number")
+            if is_empty_allowed:
+                return None
     return number  # Ignore warning
 
+
+def save_projects(projects, header, out_filename=DEFAULT_FILENAME):
+    """Write projects to an out file."""
+    with open(out_filename, 'w') as out_file:
+        print(header, file=out_file)
+        for project in projects:
+            project.cost_estimate = str(project.cost_estimate)
+            project.completion_percentage = str(project.completion_percentage)
+            print(project.save_format(), file=out_file)
+    print(f"{len(projects)} projects saved to {out_filename}")
 
 main()

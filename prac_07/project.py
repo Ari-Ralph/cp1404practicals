@@ -19,6 +19,11 @@ class Project:
         """Return string format of project object."""
         return f"{self.name}, start: {self.start_date}, priority {self.priority}, estimate: ${self.cost_estimate:,.2f}, completion: {self.completion_percentage}%"
 
+    def save_format(self):
+        """Return project object attribute separated by tabs."""
+        return f"{self.name}\t{self.start_date}\t{self.priority}\t{self.cost_estimate}\t{self.completion_percentage}"
+
+
     def is_complete(self):
         """Is completion percentage 100"""
         return self.completion_percentage == 100
