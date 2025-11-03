@@ -11,6 +11,7 @@ DEFAULT_FILENAME = "projects.txt"
 MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date\n- (A)dd new project\n- (U)pdate project\n- (Q)uit"
 INDEX_COST_ESTIMATE = 3
 INDEX_COMPLETION_PERCENTAGE = 4
+PRIORITY_MAXIMUM = 9
 
 
 def main():
@@ -31,7 +32,7 @@ def main():
         elif menu_choice == "S":
             out_filename = input("Save Filename: ")
             try:
-                save_projects(projects, header)
+                save_projects(projects, header, out_filename)
             except FileNotFoundError:
                 print("Invalid filename - Please check your spelling")
         elif menu_choice == "D":
@@ -39,7 +40,7 @@ def main():
         elif menu_choice == "F":
             pass
         elif menu_choice == "A":
-            pass
+            add_new_project(projects)
         elif menu_choice == "U":
             update_project(projects)
         else:
@@ -80,26 +81,49 @@ def display_projects(projects):
         print(f"  {completed_project}")
 
 
+def add_new_project(projects):
+    """Get input for a new project object"""
+    print("Let's add a new project")
+    name = get_valid_input("Name: ")
+    start_date = get_valid_date("Start date(dd / mm / yy): ")
+    priority = get_valid_number("Priority: ", 1, PRIORITY_MAXIMUM)
+    cost_estimate = get_valid_number("Cost estimate:", 1, input_type="float")
+    cost_estimate = get_valid_number("Percent complete:", 0, 100)
+
+
 def update_project(projects):
+    """Update the completion percentage and priority if inputs are not blank."""
     for i, project in enumerate(projects):
         print(i, project)
     project_choice = get_valid_number("Project choice:", 0, len(projects) - 1)
     selected_project = projects[project_choice]
     print(selected_project)
-    new_percentage = get_valid_number("New Percentage: ", 1, 100, True)
+    new_percentage = get_valid_number("New Percentage: ", 0, 100, True)
     # If input was empty, percentage remains the same value
     selected_project.completion_percentage = new_percentage if new_percentage is not None else selected_project.completion_percentage
-    new_priority = get_valid_number("New priority: ", 1, 100, True)
+    new_priority = get_valid_number("New priority: ", 1, PRIORITY_MAXIMUM, True)
     # If input was empty, priority remains the same value
     selected_project.priority = new_priority if new_priority is not None else selected_project.priority
 
 
-def get_valid_number(prompt: str, minimum: int, maximum: int,  is_empty_allowed = False):
+def get_valid_input(prompt: str) -> str:
+    """Get an input that is not empty."""
+    user_input = input(prompt)
+    while user_input == "":
+        print("Input can not be blank")
+        user_input = input(prompt)
+    return user_input
+
+
+def get_valid_number(prompt: str, minimum: int, maximum=None, is_empty_allowed=False, input_type=" "):
     """Get a valid number."""
     is_number_valid = False
     while not is_number_valid:
         try:
-            number = int(input(prompt))
+            if input_type == "float":
+                number = float(input(prompt))
+            else:
+                number = int(input(prompt))
             if number < minimum:
                 print(f"Number must be >= {minimum}")
             elif maximum is not None and number > maximum:
@@ -109,6 +133,7 @@ def get_valid_number(prompt: str, minimum: int, maximum: int,  is_empty_allowed 
         except ValueError:
             if is_empty_allowed:
                 return None
+            print("Invalid input")
     return number  # Ignore warning
 
 
@@ -121,5 +146,6 @@ def save_projects(projects, header, out_filename=DEFAULT_FILENAME):
             project.completion_percentage = str(project.completion_percentage)
             print(project.save_format(), file=out_file)
     print(f"{len(projects)} projects saved to {out_filename}")
+
 
 main()
