@@ -8,7 +8,7 @@ class Guitar:
     """Guitar class to store details for a guitar."""
     CURRENT_YEAR = 2022
 
-    def __init__(self, name="", year=0, cost=0):
+    def __init__(self, name="", year=0, cost=0.0):
         """Initialise a guitar instance."""
         self.name = name
         self.year = year

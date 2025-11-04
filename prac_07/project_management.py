@@ -13,6 +13,7 @@ DEFAULT_FILENAME = "projects.txt"
 MENU = ("- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date\n"
         "- (A)dd new project\n- (U)pdate project\n- (Q)uit")
 INDEX_DATE = 1
+INDEX_PRIORITY = 2
 INDEX_COST_ESTIMATE = 3
 INDEX_COMPLETION_PERCENTAGE = 4
 PRIORITY_MAXIMUM = 9
@@ -64,6 +65,7 @@ def load_projects(in_filename=DEFAULT_FILENAME):
         header = in_file.readline().strip()  # Skip headers
         for line in in_file:
             project_data = line.strip().split("\t")
+            project_data[INDEX_PRIORITY] = int(project_data[INDEX_PRIORITY])  # Ignore PyCharm warning
             project_data[INDEX_DATE] = datetime.datetime.strptime(project_data[INDEX_DATE],
                                                                   "%d/%m/%Y").date()  # Ignore PyCharm warning
             projects.append(Project(*project_data))
@@ -88,12 +90,12 @@ def display_projects(projects):
 
 
 def add_new_project(projects):
-    """Get input for a new project object."""
+    """Get and add data for a new project object."""
     print("Let's add a new project")
     name = get_valid_input("Name: ")
     start_date = get_valid_date("Start date(dd / mm / yy): ")
     priority = get_valid_number("Priority: ", 1, PRIORITY_MAXIMUM)
-    cost_estimate = get_valid_number("Cost estimate: ", 1, input_type="float")
+    cost_estimate = get_valid_number("Cost estimate: $", 0, input_type="float")
     completion_percentage = get_valid_number("Percent complete: ", 0, 100)
     projects.append(Project(name, start_date, priority, cost_estimate, completion_percentage))
 
@@ -173,7 +175,7 @@ def save_projects(projects, header, out_filename=DEFAULT_FILENAME):
 
 def filter_by_date(projects):
     """Filter projects list to get projects starting after inputted date."""
-    filter_start_date = get_valid_date("Show projects that start after date (dd/mm/yy):")
+    filter_start_date = get_valid_date("Show projects that start after date (dd/mm/yy): ")
     valid_projects = [project for project in projects if project.start_date >= filter_start_date]
     for valid_project in sorted(valid_projects, key=attrgetter('start_date')):
         print(valid_project)

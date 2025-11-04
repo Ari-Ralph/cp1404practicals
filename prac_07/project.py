@@ -5,10 +5,12 @@ Estimate: 2 hours
 Actual: 6 hours (Oh what a fool I was)
 """
 
+
 class Project:
-    """Project class to store information about a project"""
-    def __init__(self,name, start_date, priority, cost_estimate, completion_percentage):
-        """Initialise a project object"""
+    """Project class to store information about a project."""
+
+    def __init__(self, name, start_date, priority, cost_estimate, completion_percentage):
+        """Initialise a project object."""
         self.name = name
         self.start_date = start_date
         self.priority = priority
@@ -25,5 +27,5 @@ class Project:
         return f"{self.name}\t{self.start_date.strftime("%d/%m/%Y")}\t{self.priority}\t{self.cost_estimate}\t{self.completion_percentage}"
 
     def is_complete(self):
-        """Is completion percentage 100"""
+        """Is completion percentage 100."""
         return self.completion_percentage == 100
