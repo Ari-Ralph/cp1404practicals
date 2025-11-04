@@ -5,10 +5,14 @@ Estimate: 2 hours
 Actual:
 """
 # Stopped at 8:43pm
+
+# 1 hour 15 minutes
 from prac_07.project import Project
+import datetime
 
 DEFAULT_FILENAME = "projects.txt"
 MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date\n- (A)dd new project\n- (U)pdate project\n- (Q)uit"
+INDEX_DATE = 1
 INDEX_COST_ESTIMATE = 3
 INDEX_COMPLETION_PERCENTAGE = 4
 PRIORITY_MAXIMUM = 9
@@ -60,6 +64,8 @@ def load_projects(in_filename=DEFAULT_FILENAME):
         header = in_file.readline().strip()  # Skip headers
         for line in in_file:
             project_data = line.strip().split("\t")
+            project_data[INDEX_DATE] = datetime.datetime.strptime(project_data[INDEX_DATE],
+                                                                  "%d/%m/%Y").date()  # Ignore PyCharm warning
             projects.append(Project(*project_data))
     return projects, header
 
@@ -74,10 +80,10 @@ def display_projects(projects):
         else:
             incomplete_projects.append(project)
     print("Incomplete projects: ")
-    for incomplete_project in incomplete_projects:
+    for incomplete_project in sorted(incomplete_projects, reverse=True):
         print(f"  {incomplete_project}")
     print("Completed projects: ")
-    for completed_project in completed_projects:
+    for completed_project in sorted(completed_projects, reverse=True):
         print(f"  {completed_project}")
 
 
@@ -100,10 +106,23 @@ def update_project(projects):
     print(selected_project)
     new_percentage = get_valid_number("New Percentage: ", 0, 100, True)
     # If input was empty, percentage remains the same value
-    selected_project.completion_percentage = new_percentage if new_percentage is not None else selected_project.completion_percentage
+    selected_project.completion_percentage = new_percentage if new_percentage != "" else selected_project.completion_percentage
     new_priority = get_valid_number("New priority: ", 1, PRIORITY_MAXIMUM, True)
     # If input was empty, priority remains the same value
-    selected_project.priority = new_priority if new_priority is not None else selected_project.priority
+    selected_project.priority = new_priority if new_priority != "" else selected_project.priority
+
+
+def get_valid_date(prompt):
+    """Get a date from user with error checking."""
+    is_valid = False
+    while not is_valid:
+        date_parts = input(prompt)
+        try:
+            date = datetime.datetime.strptime(date_parts, "%d/%m/%Y").date()
+            is_valid = True
+        except ValueError:
+            print("Invalid date")
+    return date  # Ignore PyCharm warning
 
 
 def get_valid_input(prompt: str) -> str:
@@ -115,7 +134,7 @@ def get_valid_input(prompt: str) -> str:
     return user_input
 
 
-def get_valid_number(prompt: str, minimum: int, maximum=None, is_empty_allowed=False, input_type=" "):
+def get_valid_number(prompt: str, minimum: int, maximum=None, is_empty_allowed=False, input_type=""):
     """Get a valid number."""
     is_number_valid = False
     while not is_number_valid:
@@ -132,8 +151,10 @@ def get_valid_number(prompt: str, minimum: int, maximum=None, is_empty_allowed=F
                 is_number_valid = True
         except ValueError:
             if is_empty_allowed:
-                return None
-            print("Invalid input")
+                number = ""
+                is_number_valid = True
+            else:
+                print("Invalid input")
     return number  # Ignore warning
 
 
@@ -149,3 +170,4 @@ def save_projects(projects, header, out_filename=DEFAULT_FILENAME):
 
 
 main()
+# get_valid_date("Date: ")
