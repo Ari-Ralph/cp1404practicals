@@ -2,7 +2,7 @@
 CP1404 - Practical 07
 Project class file.
 Estimate: 2 hours
-Actual:
+Actual: 6 hours (Oh what a fool I was)
 """
 
 class Project:
@@ -17,7 +17,8 @@ class Project:
 
     def __str__(self):
         """Return string format of project object."""
-        return f"{self.name}, start: {self.start_date.strftime("%d/%m/%Y")}, priority {self.priority}, estimate: ${self.cost_estimate:,.2f}, completion: {self.completion_percentage}%"
+        return (f"{self.name}, start: {self.start_date.strftime("%d/%m/%Y")}, priority {self.priority}, "
+                f"estimate: ${self.cost_estimate:,.2f}, completion: {self.completion_percentage}%")
 
     def save_format(self):
         """Return project object attribute separated by tabs."""

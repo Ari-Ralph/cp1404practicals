@@ -2,17 +2,16 @@
 CP1404 - Practical 07
 Project client file.
 Estimate: 2 hours
-Actual:
+Actual: 6 hours (Oh what a fool I was)
 """
-# Stopped at 8:43pm
 
-# 1 hour 15 minutes
-from prac_07.project import Project
 import datetime
 from operator import attrgetter
+from prac_07.project import Project
 
 DEFAULT_FILENAME = "projects.txt"
-MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date\n- (A)dd new project\n- (U)pdate project\n- (Q)uit"
+MENU = ("- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date\n"
+        "- (A)dd new project\n- (U)pdate project\n- (Q)uit")
 INDEX_DATE = 1
 INDEX_COST_ESTIMATE = 3
 INDEX_COMPLETION_PERCENTAGE = 4
@@ -61,7 +60,7 @@ def main():
 def load_projects(in_filename=DEFAULT_FILENAME):
     """Read a txt file to create a list of Project objects."""
     projects = []
-    with open(in_filename, 'r') as in_file:
+    with open(in_filename, 'r', encoding='utf-8') as in_file:
         header = in_file.readline().strip()  # Skip headers
         for line in in_file:
             project_data = line.strip().split("\t")
@@ -89,25 +88,27 @@ def display_projects(projects):
 
 
 def add_new_project(projects):
-    """Get input for a new project object"""
+    """Get input for a new project object."""
     print("Let's add a new project")
     name = get_valid_input("Name: ")
     start_date = get_valid_date("Start date(dd / mm / yy): ")
     priority = get_valid_number("Priority: ", 1, PRIORITY_MAXIMUM)
-    cost_estimate = get_valid_number("Cost estimate:", 1, input_type="float")
-    cost_estimate = get_valid_number("Percent complete:", 0, 100)
+    cost_estimate = get_valid_number("Cost estimate: ", 1, input_type="float")
+    completion_percentage = get_valid_number("Percent complete: ", 0, 100)
+    projects.append(Project(name, start_date, priority, cost_estimate, completion_percentage))
 
 
 def update_project(projects):
     """Update the completion percentage and priority if inputs are not blank."""
     for i, project in enumerate(projects):
         print(i, project)
-    project_choice = get_valid_number("Project choice:", 0, len(projects) - 1)
+    project_choice = get_valid_number("Project choice: ", 0, len(projects) - 1)
     selected_project = projects[project_choice]
     print(selected_project)
     new_percentage = get_valid_number("New Percentage: ", 0, 100, True)
     # If input was empty, percentage remains the same value
-    selected_project.completion_percentage = new_percentage if new_percentage != "" else selected_project.completion_percentage
+    selected_project.completion_percentage = new_percentage if new_percentage != "" \
+        else selected_project.completion_percentage
     new_priority = get_valid_number("New priority: ", 1, PRIORITY_MAXIMUM, True)
     # If input was empty, priority remains the same value
     selected_project.priority = new_priority if new_priority != "" else selected_project.priority
@@ -161,7 +162,7 @@ def get_valid_number(prompt: str, minimum: int, maximum=None, is_empty_allowed=F
 
 def save_projects(projects, header, out_filename=DEFAULT_FILENAME):
     """Write projects to an out file."""
-    with open(out_filename, 'w') as out_file:
+    with open(out_filename, 'w', encoding='utf-8') as out_file:
         print(header, file=out_file)
         for project in projects:
             project.cost_estimate = str(project.cost_estimate)
@@ -169,12 +170,14 @@ def save_projects(projects, header, out_filename=DEFAULT_FILENAME):
             print(project.save_format(), file=out_file)
     print(f"{len(projects)} projects saved to {out_filename}")
 
+
 def filter_by_date(projects):
     """Filter projects list to get projects starting after inputted date."""
     filter_start_date = get_valid_date("Show projects that start after date (dd/mm/yy):")
     valid_projects = [project for project in projects if project.start_date >= filter_start_date]
     for valid_project in sorted(valid_projects, key=attrgetter('start_date')):
         print(valid_project)
+
 
 main()
 # get_valid_date("Date: ")
