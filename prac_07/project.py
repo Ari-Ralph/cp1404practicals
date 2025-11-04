@@ -26,7 +26,3 @@ class Project:
     def is_complete(self):
         """Is completion percentage 100"""
         return self.completion_percentage == 100
-
-    def __lt__(self, other):
-        """Return whether self's priority is less than other's priority. """
-        return self.priority < other.priority

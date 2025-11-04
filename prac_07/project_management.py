@@ -9,6 +9,7 @@ Actual:
 # 1 hour 15 minutes
 from prac_07.project import Project
 import datetime
+from operator import attrgetter
 
 DEFAULT_FILENAME = "projects.txt"
 MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date\n- (A)dd new project\n- (U)pdate project\n- (Q)uit"
@@ -42,7 +43,7 @@ def main():
         elif menu_choice == "D":
             display_projects(projects)
         elif menu_choice == "F":
-            pass
+            filter_by_date(projects)
         elif menu_choice == "A":
             add_new_project(projects)
         elif menu_choice == "U":
@@ -80,10 +81,10 @@ def display_projects(projects):
         else:
             incomplete_projects.append(project)
     print("Incomplete projects: ")
-    for incomplete_project in sorted(incomplete_projects, reverse=True):
+    for incomplete_project in sorted(incomplete_projects, key=attrgetter('priority')):
         print(f"  {incomplete_project}")
     print("Completed projects: ")
-    for completed_project in sorted(completed_projects, reverse=True):
+    for completed_project in sorted(completed_projects, key=attrgetter('priority')):
         print(f"  {completed_project}")
 
 
@@ -168,6 +169,12 @@ def save_projects(projects, header, out_filename=DEFAULT_FILENAME):
             print(project.save_format(), file=out_file)
     print(f"{len(projects)} projects saved to {out_filename}")
 
+def filter_by_date(projects):
+    """Filter projects list to get projects starting after inputted date."""
+    filter_start_date = get_valid_date("Show projects that start after date (dd/mm/yy):")
+    valid_projects = [project for project in projects if project.start_date >= filter_start_date]
+    for valid_project in sorted(valid_projects, key=attrgetter('start_date')):
+        print(valid_project)
 
 main()
 # get_valid_date("Date: ")
