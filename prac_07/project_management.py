@@ -25,7 +25,7 @@ def main():
     print("Welcome to Pythonic Project Management")
     print(f"Loaded {len(projects)} projects from {DEFAULT_FILENAME}")
     print(MENU)
-    menu_choice = input(">>> ").upper()
+    menu_choice = input(">>> ").upper().strip()
     while menu_choice != "Q":
         if menu_choice == "L":
             in_filename = input("Input Filename: ")
@@ -49,9 +49,9 @@ def main():
         elif menu_choice == "U":
             update_project(projects)
         else:
-            print()
+            print("Invalid choice")
         print(MENU)
-        menu_choice = input(">>> ").upper()
+        menu_choice = input(">>> ").upper().strip()
     save_choice = input(f"Would you like to save to {DEFAULT_FILENAME}? ").upper()
     if save_choice == "Y":
         save_projects(projects, header)
@@ -74,18 +74,14 @@ def load_projects(in_filename=DEFAULT_FILENAME):
 
 def display_projects(projects):
     """Display projects organised into completion status."""
-    completed_projects = []
-    incomplete_projects = []
-    for project in projects:
-        if project.is_complete():
-            completed_projects.append(project)
-        else:
-            incomplete_projects.append(project)
+    completed_projects = sorted([project for project in projects if project.is_complete()], key=attrgetter('priority'))
+    incomplete_projects = sorted([project for project in projects if not project.is_complete()],
+                                 key=attrgetter('priority'))
     print("Incomplete projects: ")
-    for incomplete_project in sorted(incomplete_projects, key=attrgetter('priority')):
+    for incomplete_project in incomplete_projects:
         print(f"  {incomplete_project}")
     print("Completed projects: ")
-    for completed_project in sorted(completed_projects, key=attrgetter('priority')):
+    for completed_project in completed_projects:
         print(f"  {completed_project}")
 
 
@@ -140,23 +136,21 @@ def get_valid_input(prompt: str) -> str:
 
 def get_valid_number(prompt: str, minimum: int, maximum=None, is_empty_allowed=False, input_type=""):
     """Get a valid number."""
-    is_number_valid = False
-    while not is_number_valid:
+    is_input_valid = False
+    while not is_input_valid:
         try:
-            if input_type == "float":
-                number = float(input(prompt))
-            else:
-                number = int(input(prompt))
+            user_input = input(prompt)
+            number = float(user_input) if input_type == "float" else int(input_type)
             if number < minimum:
                 print(f"Number must be >= {minimum}")
             elif maximum is not None and number > maximum:
                 print(f"Number must be less than {maximum}")
             else:
-                is_number_valid = True
+                is_input_valid = True
         except ValueError:
             if is_empty_allowed:
                 number = ""
-                is_number_valid = True
+                is_input_valid = True
             else:
                 print("Invalid input")
     return number  # Ignore warning
@@ -182,4 +176,3 @@ def filter_by_date(projects):
 
 
 main()
-# get_valid_date("Date: ")
