@@ -8,7 +8,7 @@ Actual: 56 minutes
 
 from prac_06.guitar import Guitar
 
-guitars =  []
+guitars =  [Guitar("Line 6 JTV-59", 2010, 1512.9)]
 
 print("My guitars!")
 name = input("Name: ")
