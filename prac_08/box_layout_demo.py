@@ -1,3 +1,7 @@
+"""
+CP1404 - Practical 08
+Box layout console program.
+"""
 from kivy.app import App
 from kivy.lang import Builder
 
