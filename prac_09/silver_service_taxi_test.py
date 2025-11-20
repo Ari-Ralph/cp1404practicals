@@ -15,4 +15,4 @@ print(default_silver_service)
 
 # Test get fare method
 default_silver_service.drive(18)
-assert default_silver_service.get_fare() == 93.06
+assert default_silver_service.get_fare() == 93.10

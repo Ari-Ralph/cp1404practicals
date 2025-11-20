@@ -16,8 +16,8 @@ class SilverServiceTaxi(Taxi):
 
     def __str__(self):
         """Return a string like a Taxi but with flagfall."""
-        return f"{super().__str__()}, {self.current_fare_distance}km on current fare, ${self.price_per_km:.2f}/km plus flagfall of ${self.flagfall:.2f}"
+        return f"{super().__str__()}, plus flagfall of ${self.flagfall:.2f}"
 
     def get_fare(self):
         """Return price of fare with flagfall."""
-        return self.flagfall + self.price_per_km * self.current_fare_distance
+        return self.flagfall + super().get_fare()
