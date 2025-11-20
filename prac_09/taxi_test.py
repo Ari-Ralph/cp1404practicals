@@ -6,7 +6,7 @@ Testing for Taxi car.
 from taxi import Taxi
 
 # 1. Create my_taxi object
-my_taxi = Taxi("Prius 1", 100, 1.23)
+my_taxi = Taxi("Prius 1", 100)
 
 # 2. Drive my_taxi 40km
 my_taxi.drive(40)
