@@ -14,7 +14,7 @@ def main():
     """Taxi simulator with menu pattern."""
     taxis = [Taxi("Prius", 100), SilverServiceTaxi("Limo", 100, 2), SilverServiceTaxi("Hummer", 200, 4)]
     bill_to_date = 0.0
-    current_taxi = ""
+    current_taxi = None
     print("Let's drive!")
     print(MENU)
     choice = input(">>> ").lower()
@@ -24,7 +24,7 @@ def main():
             display_taxis(taxis)
             current_taxi = get_taxi(taxis)
         elif choice == 'd':
-            if current_taxi == "":
+            if current_taxi is None:
                 print("You need to choose a taxi before you can drive")
             else:
                 bill_to_date = drive_taxi(current_taxi, bill_to_date)
@@ -50,7 +50,7 @@ def get_taxi(taxis: list):
         return taxis[taxi_choice]
     else:
         print("Invalid taxi choice")
-        return ""
+        return None
 
 def drive_taxi(current_taxi, bill_to_date):
     """Drive taxi given distance with fare."""
